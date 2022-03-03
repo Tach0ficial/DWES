@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Contact{% endblock%}
+
+{% block body %}
+	<header>
+		<h1>About symblog</h1>
+	</header>
+	<!--Formulario contactos-->
+	<form name="formContact" method="post" action="/contact">
+		<div id="enquiry">
+			<div>
+				<label for="enquiry_name">Name:</label>
+				<input type="text" id="enquiry_name" name="name"/>
+			</div>
+			<div>
+				<label for="enquiry_email">email</label>
+				<input type="text" id="enquiry_email" name="email" required="required"/>
+			</div>
+			<div>
+				<label for="enquiry_subject" class="required">Subject</label>
+				<input type="text" id="enquiry_subject" name="subject" required="required"/>
+			</div>
+			<div>
+				<label for="enquiry_body" class="required">Body</label>
+				<textarea id="enquiry_body" name="body" required="required"></textarea>
+
+			</div>
+			<input type="submit" id="enquiry_save" name="save" value="Send">
+		</div>
+	</div>
+</form>{% endblock %}

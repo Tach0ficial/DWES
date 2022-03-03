@@ -1,0 +1,24 @@
+{% extends 'layout.html.twig' %}
+{% block body %}
+        <article class="blog">
+        <div class="date"><time datetime="{{ blog.created_at|date('c') }}">{{ blog.created_at|date('l, F j, Y') }}</time></div>
+        <header>
+        <h2><a href="blog/{{blog.id}}">{{blog.title}}</a></h2>
+        </header>
+        <img src="/img/{{blog.image}}" />
+        <div class="snippet">
+        <p>{{blog.blog}}</p>
+        <p class="continue"><a href="#">Continue reading...</a></p>
+        </div>
+        <footer class="meta">
+         <!--p>Comments: {{ blog.comments|length }}</p-->
+                 <p>Comments: <a href="#">
+                 </a></p>
+                 <p>Posted by <span class="highlight">{{blog.author}}</span> at {{ blog.created_at|date('g:i a') }}</p>
+                 </p>
+                 <p>Tags: <span class="highlight">{{blog.tags}}</span></p>
+            </footer>
+        </article>
+    {% include "Page/coments.html.twig" %}
+    
+{% endblock %}
