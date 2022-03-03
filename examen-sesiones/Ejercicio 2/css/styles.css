@@ -1,0 +1,23 @@
+* {
+  font-family: sans-serif;
+}
+.error {
+  color: red;
+  font-weight: bold;
+}
+.success {
+  color: green;
+  font-weight: bold;
+}
+a ,input[type="submit"]{
+  text-decoration: none;
+  color: gray;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 10px;
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+}
+a:hover,input[type="submit"]:hover {
+  background-color: #f1f1f1;
+}

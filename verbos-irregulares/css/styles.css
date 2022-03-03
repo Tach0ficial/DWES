@@ -1,0 +1,25 @@
+td {
+    border: black 5px solid;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+}
+table {
+    width: 1200px;
+    margin: auto;
+    border-radius: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+.error{
+    color: red;
+}
+.correct{
+    color: green;
+    
+}
+.title{
+    background-color: antiquewhite;
+}
