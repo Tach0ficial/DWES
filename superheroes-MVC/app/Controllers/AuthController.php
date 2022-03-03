@@ -17,7 +17,7 @@ class AuthController extends BaseController
                     $_SESSION['id'] = $usuario->getId();
                     $_SESSION['username'] = $usuario->getUsername();
                     $_SESSION['perfil'] = $usuario->getPerfil();
-                    header('Location: /');
+                    header('Location: ./');
                 } else {
                     $data = "Usuario o contraseña incorrectos";
                     $this->renderHTML('../Views/login_view.php', $data);
@@ -44,7 +44,7 @@ class AuthController extends BaseController
                         $ciudadano->setEmail(clearData($_POST['email']));
                         $ciudadano->setIdUsuario($user->lastInsert());
                         $ciudadano->set();
-                        header('Location: /login');
+                        header('Location: ./login');
                     }else{
                         $data['error'] = 'El usuario ya existe';
                         $this->renderHTML('../Views/signup_view.php', $data);
@@ -61,6 +61,6 @@ class AuthController extends BaseController
     public function logoutAction()
     {
         session_destroy();
-        header('Location: /login');
+        header('Location: ./login');
     }
 }

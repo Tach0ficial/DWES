@@ -20,7 +20,7 @@ class CiudadanosController extends BaseController
                 $peticion->setIdSuperheroe($idSuperheroe);
                 $peticion->setIdCiudadano($idCiudadano);
                 $peticion->set();
-                header('Location: /');
+                header('Location: ./');
             }else{
                 $data["error"] = "No se ha podido realizar la petición";
                 $this->renderHTML('../Views/peticion_view.php', $data);

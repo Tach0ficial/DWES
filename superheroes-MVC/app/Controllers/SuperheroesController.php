@@ -35,7 +35,7 @@ class SuperheroesController extends BaseController
             $sh->setNombre(clearData($_POST['nombre']));
             $sh->setVelocidad(clearData($_POST['velocidad']));
             $sh->edit();
-            header('Location: /');
+            header('Location: ./');
         } else {
             $sh = Superheroe::getInstancia();
             $data = $sh->get($id);
@@ -96,15 +96,15 @@ class SuperheroesController extends BaseController
                         foreach ($_POST['habilidades'] as $habilidad) {
                             $sh->setHabilidadById($idSuperheroe, $habilidad, $_POST[$habilidad . 'Valor']);
                         }
-                        header('Location: /');
+                        header('Location: ./');
                     } else {
-                        header('Location: /add');
+                        header('Location: ./add');
                     }
                 } else {
-                    header('Location: /add');
+                    header('Location: ./add');
                 }
             } else {
-                header('Location: /add');
+                header('Location: ./add');
             }
         } else {
             $hb = Habilidad::getInstancia();
@@ -131,7 +131,7 @@ class SuperheroesController extends BaseController
             $habilidad->set();
             $habilidad->setId($habilidad->lastInsert());
             $sh->setHabilidad($habilidad->getId(), clearData($_POST['valor']));
-            header('Location: /');
+            header('Location: ./');
         } else {
             $this->renderHTML('../Views/newHabilidad_view.php');
         }
@@ -156,6 +156,6 @@ class SuperheroesController extends BaseController
             $sh->experto($sh->getIdSuperheroeByIdUser($_SESSION['id']));
             $_SESSION['perfil'] = "superheroeExperto";
         }
-        header('Location: /');
+        header('Location: ./');
     }
 }

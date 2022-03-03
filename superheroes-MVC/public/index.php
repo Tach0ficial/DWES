@@ -101,11 +101,8 @@ if ($_SESSION['perfil'] == 'ciudadano') {
         'action' => [CiudadanosController::class, 'peticionAction']
     ));
 }
-
-
-
-$request = $_SERVER['REQUEST_URI'];
-$route = $router->matcher($_SERVER['REQUEST_URI']);
+$request = explode("public",$_SERVER['REQUEST_URI'])[1];
+$route = $router->matcher($request);
 include("../Views/nav.php");
 
 if ($route) {
