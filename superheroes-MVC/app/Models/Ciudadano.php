@@ -81,7 +81,7 @@ class Ciudadano extends DBAbstractModel
         $nombre = $this->nombre;
         $email = $this->email;
         $idUsuario = $this->idUsuario;
-        $this->query = "INSERT INTO ciudadanos(nombre, email, idUsuario)
+        $this->query = "INSERT INTO superheroes_ciudadanos(nombre, email, idUsuario)
                         VALUES(:nombre, :email, :idUsuario)";
         $this->parametros['nombre'] = $nombre;
         $this->parametros['email'] = $email;
@@ -91,7 +91,7 @@ class Ciudadano extends DBAbstractModel
     }
     public function get($id = null)
     {
-        $this->query = "SELECT * FROM ciudadanos where id = :id";
+        $this->query = "SELECT * FROM superheroes_ciudadanos where id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Cuidadano listado correctamente';
@@ -103,7 +103,7 @@ class Ciudadano extends DBAbstractModel
     }
     public function getAll()
     {
-        $this->query = "SELECT * FROM ciudadanos";
+        $this->query = "SELECT * FROM superheroes_ciudadanos";
         $this->get_results_from_query();
         $this->mensaje = 'Ciudadanos listados correctamente';
         return $this->rows;
@@ -113,7 +113,7 @@ class Ciudadano extends DBAbstractModel
         $id = $this->id;
         $nombre = $this->nombre;
         $email = $this->email;
-        $this->query = "UPDATE ciudadanos SET nombre = :nombre, email = :email, idUsuario = :idUsuario WHERE id = :id";
+        $this->query = "UPDATE superheroes_ciudadanos SET nombre = :nombre, email = :email, idUsuario = :idUsuario WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->parametros['nombre'] = $nombre;
         $this->parametros['email'] = $email;
@@ -126,14 +126,14 @@ class Ciudadano extends DBAbstractModel
     }
     public function delete($id = null)
     {
-        $this->query = "DELETE FROM ciudadanos WHERE id = :id";
+        $this->query = "DELETE FROM superheroes_ciudadanos WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Ciudadano borrado correctamente';
     }
     public function ciudadanoExist($id)
     {
-        $this->query = "SELECT * FROM ciudadanos WHERE idUsuario = " . $id;
+        $this->query = "SELECT * FROM superheroes_ciudadanos WHERE idUsuario = " . $id;
         $this->get_results_from_query();
         if (count($this->rows) > 0) {
             return true;
@@ -144,7 +144,7 @@ class Ciudadano extends DBAbstractModel
 
     public function getIdCiudadanoByIdUser($idUser)
     {
-        $this->query = "SELECT id FROM ciudadanos WHERE idUsuario = " . $idUser;
+        $this->query = "SELECT id FROM superheroes_ciudadanos WHERE idUsuario = " . $idUser;
         $this->get_results_from_query();
         return $this->rows[0]["id"];
     }

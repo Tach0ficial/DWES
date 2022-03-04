@@ -81,7 +81,7 @@ class Superheroe extends DBAbstractModel
         $evolucion = "PRINCIPIANTE";
         $idUsuario = $this->idUsuario;
         $imagen = $this->imagen;
-        $this->query = "INSERT INTO superheroes(nombre, evolucion, idUsuario, imagen)
+        $this->query = "INSERT INTO superheroes_superheroes(nombre, evolucion, idUsuario, imagen)
                         VALUES(:nombre, :evolucion, :idUsuario, :imagen)";
         $this->parametros['nombre'] = $nombre;
         $this->parametros['evolucion'] = $evolucion;
@@ -92,7 +92,7 @@ class Superheroe extends DBAbstractModel
     }
     public function get($id = null)
     {
-        $this->query = "SELECT * FROM superheroes where id = :id";
+        $this->query = "SELECT * FROM superheroes_superheroes where id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'SH listado correctamente';
@@ -103,7 +103,7 @@ class Superheroe extends DBAbstractModel
     }
     public function getAll()
     {
-        $this->query = "SELECT * FROM superheroes";
+        $this->query = "SELECT * FROM superheroes_superheroes";
         $this->get_results_from_query();
         $this->mensaje = 'SHs listados correctamente';
         return $this->rows;
@@ -112,11 +112,11 @@ class Superheroe extends DBAbstractModel
     {
         $id = $this->id;
         $nombre = $this->nombre;
-        $evolucion = $this->evolucion;
-        $this->query = "UPDATE superheroes SET nombre = :nombre, evolucion = :evolucion WHERE id = :id";
+        $imagen = $this->imagen;
+        $this->query = "UPDATE superheroes_superheroes SET nombre = :nombre, imagen = :imagen WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->parametros['nombre'] = $nombre;
-        $this->parametros['evolucion'] = $evolucion;
+        $this->parametros['imagen'] = $imagen;
         $this->get_results_from_query();
         $this->mensaje = 'SH modificado correctamente';
     }
@@ -125,7 +125,7 @@ class Superheroe extends DBAbstractModel
         $id = $obj->getId();
         $nombre = $obj->getNombre();
         $evolucion = $obj->getVelocidad();
-        $this->query = "UPDATE superheroes SET nombre = :nombre, evolucion = :evolucion WHERE id = :id";
+        $this->query = "UPDATE superheroes_superheroes SET nombre = :nombre, evolucion = :evolucion WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->parametros['nombre'] = $nombre;
         $this->parametros['evolucion'] = $evolucion;
@@ -134,7 +134,7 @@ class Superheroe extends DBAbstractModel
     }
     public function delete($id = null)
     {
-        $this->query = "DELETE FROM superheroes WHERE id = :id";
+        $this->query = "DELETE FROM superheroes_superheroes WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'SH borrado correctamente';
@@ -142,7 +142,7 @@ class Superheroe extends DBAbstractModel
 
     public function getLastSh($numero = 1)
     {
-        $this->query = "SELECT nombre, evolucion, id FROM superheroes ORDER BY id DESC LIMIT " . $numero;
+        $this->query = "SELECT nombre, evolucion, id FROM superheroes_superheroes ORDER BY id DESC LIMIT " . $numero;
 
         $this->get_results_from_query();
         return $this->rows;
@@ -151,7 +151,7 @@ class Superheroe extends DBAbstractModel
 
     public function buscar($nombre)
     {
-        $this->query = "SELECT * FROM superheroes WHERE nombre LIKE '%$nombre%'";
+        $this->query = "SELECT * FROM superheroes_superheroes WHERE nombre LIKE '%$nombre%'";
         $this->get_results_from_query();
         $this->mensaje = 'SH obtenidos correctamente';
         return $this->rows;
@@ -161,7 +161,7 @@ class Superheroe extends DBAbstractModel
     {
         $habilidad = Habilidad::getInstancia();
         $habilidades = [];
-        $this->query = "SELECT * FROM superheroes_habilidades WHERE idSuperheroe = " . $id;
+        $this->query = "SELECT * FROM superheroes_superheroes_habilidades WHERE idSuperheroe = " . $id;
         $this->get_results_from_query();
         foreach ($this->rows as $key => $row) {
             array_push($habilidades, "|".$habilidad->get($row['idHabilidad'])->getNombre() . ", Valor: " . $habilidad->getValorById($row['idHabilidad'], $id)."| ");
@@ -171,7 +171,7 @@ class Superheroe extends DBAbstractModel
 
     public function superheroeExist($id)
     {
-        $this->query = "SELECT * FROM superheroes WHERE idUsuario = " . $id;
+        $this->query = "SELECT * FROM superheroes_superheroes WHERE idUsuario = " . $id;
         $this->get_results_from_query();
         if (count($this->rows) > 0) {
             return true;
@@ -182,7 +182,7 @@ class Superheroe extends DBAbstractModel
 
     public function superheroeExperto($id)
     {
-        $this->query = "SELECT * FROM superheroes WHERE evolucion = 'EXPERTO' AND idUsuario = " . $id;
+        $this->query = "SELECT * FROM superheroes_superheroes WHERE evolucion = 'EXPERTO' AND idUsuario = " . $id;
         $this->get_results_from_query();
         if (count($this->rows) > 0) {
             return true;
@@ -193,7 +193,7 @@ class Superheroe extends DBAbstractModel
 
     public function experto($id)
     {
-        $this->query = "UPDATE superheroes SET evolucion = 'EXPERTO' WHERE id = :id";
+        $this->query = "UPDATE superheroes_superheroes SET evolucion = 'EXPERTO' WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'SH modificado correctamente';
@@ -201,7 +201,7 @@ class Superheroe extends DBAbstractModel
 
     public function getIdSuperheroeByIdUser($idUser)
     {
-        $this->query = "SELECT id FROM superheroes WHERE idUsuario = " . $idUser;
+        $this->query = "SELECT id FROM superheroes_superheroes WHERE idUsuario = " . $idUser;
         $this->get_results_from_query();
         return $this->rows[0]["id"];
     }
@@ -210,7 +210,7 @@ class Superheroe extends DBAbstractModel
     {
         $sh = Superheroe::getInstancia();
         $idSuperheroe = $sh->getIdSuperheroeByIdUser($_SESSION['id']);
-        $this->query = "INSERT INTO superheroes_habilidades(idSuperheroe, idHabilidad, valor)
+        $this->query = "INSERT INTO superheroes_superheroes_habilidades(idSuperheroe, idHabilidad, valor)
                         VALUES(:idSuperheroe, :idHabilidad, :valor)";
         $this->parametros['idSuperheroe'] = $idSuperheroe;
         $this->parametros['idHabilidad'] = $idHabilidad;
@@ -221,7 +221,7 @@ class Superheroe extends DBAbstractModel
 
     public function setHabilidadById($idSuperheroe, $idHabilidad, $valor)
     {
-        $this->query = "INSERT INTO superheroes_habilidades(idSuperheroe, idHabilidad, valor)
+        $this->query = "INSERT INTO superheroes_superheroes_habilidades(idSuperheroe, idHabilidad, valor)
                         VALUES(:idSuperheroe, :idHabilidad, :valor)";
         $this->parametros['idSuperheroe'] = $idSuperheroe;
         $this->parametros['idHabilidad'] = $idHabilidad;

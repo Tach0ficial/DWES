@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-require_once 'DBAbstractModel.php';
+
 class Usuario extends DBAbstractModel
 {
     /*CONSTRUCCIÓN DEL MODELO SINGLETON*/
@@ -71,7 +71,7 @@ class Usuario extends DBAbstractModel
     {
         $username = $this->username;
         $psw = $this->psw;
-        $this->query = "INSERT INTO usuarios(username, psw)
+        $this->query = "INSERT INTO superheroes_usuarios(username, psw)
                         VALUES(:username, :psw)";
         $this->parametros['username'] = $username;
         $this->parametros['psw'] = $psw;
@@ -80,7 +80,7 @@ class Usuario extends DBAbstractModel
     }
     public function get($id = null)
     {
-        $this->query = "SELECT * FROM usuarios where id = :id";
+        $this->query = "SELECT * FROM superheroes_usuarios where id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Usuario listado correctamente';
@@ -91,7 +91,7 @@ class Usuario extends DBAbstractModel
     }
     public function getAll()
     {
-        $this->query = "SELECT * FROM usuarios";
+        $this->query = "SELECT * FROM superheroes_usuarios";
         $this->get_results_from_query();
         $this->mensaje = 'Usuarios listados correctamente';
         return $this->rows;
@@ -101,7 +101,7 @@ class Usuario extends DBAbstractModel
         $id = $this->id;
         $username = $this->username;
         $psw = $this->psw;
-        $this->query = "UPDATE usuarios SET username = :username, psw = :psw WHERE id = :id";
+        $this->query = "UPDATE superheroes_usuarios SET username = :username, psw = :psw WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->parametros['username'] = $username;
         $this->parametros['psw'] = $psw;
@@ -113,14 +113,14 @@ class Usuario extends DBAbstractModel
     }
     public function delete($id = null)
     {
-        $this->query = "DELETE FROM usuarios WHERE id = :id";
+        $this->query = "DELETE FROM superheroes_usuarios WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Usuario borrado correctamente';
     }
     public function userExist($ussername)
     {
-        $this->query = "SELECT * FROM usuarios WHERE username = :username";
+        $this->query = "SELECT * FROM superheroes_usuarios WHERE username = :username";
         $this->parametros['username'] = $ussername;
         $this->get_results_from_query();
         if (count($this->rows) > 0) {
@@ -131,7 +131,7 @@ class Usuario extends DBAbstractModel
     }
     public function login($username, $password)
     {
-        $this->query = "SELECT * FROM usuarios WHERE username = :username AND psw = :psw";
+        $this->query = "SELECT * FROM superheroes_usuarios WHERE username = :username AND psw = :psw";
         $this->parametros['username'] = $username;
         $this->parametros['psw'] = $password;
         $this->get_results_from_query();
@@ -143,7 +143,7 @@ class Usuario extends DBAbstractModel
     }
     public function getByUsername($username)
     {
-        $this->query = "SELECT * FROM usuarios where username = :username";
+        $this->query = "SELECT * FROM superheroes_usuarios where username = :username";
         $this->get_results_from_query();
         $this->mensaje = 'Usuario listado correctamente';
         $usuario = Usuario::getInstancia();

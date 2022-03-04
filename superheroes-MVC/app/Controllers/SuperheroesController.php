@@ -28,14 +28,49 @@ class SuperheroesController extends BaseController
     // /sh/edit/id/ ShController EditAction
     public function editAction()
     {
-        $id = explode('/', $_SERVER['REQUEST_URI'])[2];
+        $id = explode('public', $_SERVER['REQUEST_URI'])[1];
+        $id = explode('/', $id)[2];
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sh = Superheroe::getInstancia();
             $sh->setId($id);
             $sh->setNombre(clearData($_POST['nombre']));
-            $sh->setVelocidad(clearData($_POST['velocidad']));
+            define("MAXSIZE", 2097152);
+            define("DIR_UPLOAD", "./img/");
+            $allowedExts = array("jpg", "jpeg", "gif", "png");
+            $allowedFormats = array("image/jpg", "image/jpeg", "image/gif", "image/png", "image/x-png");
+            $extension = explode(".", $_FILES["file"]["name"]);
+            $extension = strtolower(end($extension));
+            $format = $_FILES["file"]["type"];
+            $size = $_FILES["file"]["size"];
+            $error = $_FILES["file"]["error"];
+            $name =
+                substr($_FILES["file"]["name"], 0, strrpos($_FILES["file"]["name"], ".")) .
+                getdate()["year"] .
+                getdate()["mon"] .
+                getdate()["mday"] .
+                getdate()["hours"] .
+                getdate()["minutes"] .
+                getdate()["seconds"] . "." . $extension;
+            if (
+                $size <= MAXSIZE
+                && in_array($format, $allowedFormats)
+                && in_array($extension, $allowedExts)
+                && $error == 0
+                && $name != ""
+            ) {
+                echo "Foto subida.<br>";
+                if (move_uploaded_file($_FILES["file"]["tmp_name"], DIR_UPLOAD . $name)) {
+                    echo "La foto " .  basename($_FILES["file"]["name"]) .
+                        " ha sido subido correctamente.";
+                } else {
+                    echo "Ha ocurrido un error al subir la foto.";
+                }
+            } else {
+                echo "Error al subir la foto.";
+            }
+            $sh->setImagen($name);
             $sh->edit();
-            header('Location: ./');
+            header('Location: ../');
         } else {
             $sh = Superheroe::getInstancia();
             $data = $sh->get($id);
@@ -115,7 +150,8 @@ class SuperheroesController extends BaseController
 
     public function deleteAction()
     {
-        $id = explode('/', $_SERVER['REQUEST_URI'])[2];
+        $id = explode('public', $_SERVER['REQUEST_URI'])[1];
+        $id = explode('/', $id)[2];
         $sh = Superheroe::getInstancia();
         $data = $sh->get($id);
         $sh->delete($id);
@@ -148,7 +184,8 @@ class SuperheroesController extends BaseController
 
     public function realizarPeticionAction()
     {
-        $idPeticion = explode('/', $_SERVER['REQUEST_URI'])[2];
+        $id = explode('public', $_SERVER['REQUEST_URI'])[1];
+        $idPeticion = explode('/', $id)[2];
         $peticion = Peticion::getInstancia();
         $sh = Superheroe::getInstancia();
         $peticion->realizada($idPeticion);

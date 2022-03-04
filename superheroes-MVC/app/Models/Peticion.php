@@ -84,7 +84,7 @@ class Peticion extends DBAbstractModel
         $realizada = false;
         $idSuperheroe = $this->idSuperheroe;
         $idCiudadano = $this->idCiudadano;
-        $this->query = "INSERT INTO peticiones(titulo, descripcion, realizada, idSuperheroe, idCiudadano)
+        $this->query = "INSERT INTO superheroes_peticiones(titulo, descripcion, realizada, idSuperheroe, idCiudadano)
                         VALUES(:titulo, :descripcion, :realizada, :idSuperheroe, :idCiudadano)";
         $this->parametros['titulo'] = $titulo;
         $this->parametros['descripcion'] = $descripcion;
@@ -96,7 +96,7 @@ class Peticion extends DBAbstractModel
     }
     public function get($id = null)
     {
-        $this->query = "SELECT * FROM peticiones where id = :id";
+        $this->query = "SELECT * FROM superheroes_peticiones where id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Peticion listada correctamente';
@@ -110,14 +110,14 @@ class Peticion extends DBAbstractModel
     }
     public function getAll()
     {
-        $this->query = "SELECT * FROM peticiones";
+        $this->query = "SELECT * FROM superheroes_peticiones";
         $this->get_results_from_query();
         $this->mensaje = 'Peticiones listadas correctamente';
         return $this->rows;
     }
     public function getAllByIdSuperheroe($idSuperheroe)
     {
-        $this->query = "SELECT * FROM peticiones WHERE idSuperheroe = ".$idSuperheroe;
+        $this->query = "SELECT * FROM superheroes_peticiones WHERE idSuperheroe = ".$idSuperheroe;
         $this->get_results_from_query();
         $this->mensaje = 'Peticiones listadas correctamente';
         return $this->rows;
@@ -130,7 +130,7 @@ class Peticion extends DBAbstractModel
         $realizada = $this->realizada;
         $idSuperheroe = $this->idSuperheroe;
         $idCiudadano = $this->idCiudadano;
-        $this->query = "UPDATE peticiones SET titulo = :titulo, descripcion = :descripcion, realizada = :realizada , idSuperheroe = :idSuperheroe ,idCiudadano = : idCiudadano WHERE id = :id";
+        $this->query = "UPDATE superheroes_peticiones SET titulo = :titulo, descripcion = :descripcion, realizada = :realizada , idSuperheroe = :idSuperheroe ,idCiudadano = : idCiudadano WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->parametros['titulo'] = $titulo;
         $this->parametros['descripcion'] = $descripcion;
@@ -145,21 +145,21 @@ class Peticion extends DBAbstractModel
     }
     public function delete($id = null)
     {
-        $this->query = "DELETE FROM peticiones WHERE id = :id";
+        $this->query = "DELETE FROM superheroes_peticiones WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Peticion borrado correctamente';
     }
     public function realizada($id = null)
     {
-        $this->query = "UPDATE peticiones SET realizada = true WHERE id = :id";
+        $this->query = "UPDATE superheroes_peticiones SET realizada = true WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Peticion realizada correctamente';
     }
     public function getNumOfPeticiones($idSuperheroe)
     {
-        $this->query = "SELECT COUNT(*) as num FROM peticiones WHERE idSuperheroe = ".$idSuperheroe;
+        $this->query = "SELECT COUNT(*) as num FROM superheroes_peticiones WHERE idSuperheroe = ".$idSuperheroe;
         $this->get_results_from_query();
         $this->mensaje = 'Peticiones listadas correctamente';
         return $this->rows[0]['num'];

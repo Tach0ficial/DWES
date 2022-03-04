@@ -1,12 +1,12 @@
 <?php
 
-require('../vendor/autoload.php');
-require('../bootstrap.php');
+require('./../vendor/autoload.php');
+require('./../bootstrap.php');
 
 use App\Controllers\SuperheroesController;
 use App\Controllers\CiudadanosController;
 use App\Controllers\AuthController;
-use App\Core\Router;
+use App\core\Router;
 
 session_start();
 if (!isset($_SESSION['perfil'])) {
@@ -23,7 +23,6 @@ function clearData($data)
 }
 
 $router = new Router();
-
 //HOME
 
 $router->add(array(
@@ -52,7 +51,6 @@ if ($_SESSION['perfil'] == 'superheroeExperto') {
         'action' => [SuperheroesController::class, 'deleteAction']
     ));
 }
-
 if ($_SESSION['perfil'] == 'superheroeExperto' || $_SESSION['perfil'] == 'superheroe') {
     $router->add(array(
         'name' => 'newHabilidad',
@@ -101,9 +99,12 @@ if ($_SESSION['perfil'] == 'ciudadano') {
         'action' => [CiudadanosController::class, 'peticionAction']
     ));
 }
+
 $request = explode("public",$_SERVER['REQUEST_URI'])[1];
 $route = $router->matcher($request);
-include("../Views/nav.php");
+
+
+include("./../Views/nav.php");
 
 if ($route) {
     $controllerName = $route['action'][0];
@@ -111,6 +112,6 @@ if ($route) {
     $controller = new $controllerName;
     $controller->$actionName($request);
 } else {
-    include("../Views/error_view.php");
+    include("./../Views/error_view.php");
 }
 echo ("</body></html>");

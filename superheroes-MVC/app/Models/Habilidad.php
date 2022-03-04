@@ -61,14 +61,14 @@ class Habilidad extends DBAbstractModel
     public function set()
     {
         $nombre = $this->nombre;
-        $this->query = "INSERT INTO habilidades(nombre)
+        $this->query = "INSERT INTO superheroes_habilidades(nombre)
                         VALUES(:nombre)";
         $this->parametros['nombre'] = $nombre;
         $this->get_results_from_query();
     }
     public function get($id = null)
     {
-        $this->query = "SELECT * FROM habilidades where id = :id";
+        $this->query = "SELECT * FROM superheroes_habilidades where id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Usuario listado correctamente';
@@ -78,7 +78,7 @@ class Habilidad extends DBAbstractModel
     }
     public function getAll()
     {
-        $this->query = "SELECT * FROM habilidades";
+        $this->query = "SELECT * FROM superheroes_habilidades";
         $this->get_results_from_query();
         $this->mensaje = 'Habilidades listadas correctamente';
         return $this->rows;
@@ -87,7 +87,7 @@ class Habilidad extends DBAbstractModel
     {
         $id = $this->id;
         $nombre = $this->nombre;
-        $this->query = "UPDATE habilidades SET nombre = :nombre WHERE id = :id";
+        $this->query = "UPDATE superheroes_habilidades SET nombre = :nombre WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->parametros['nombre'] = $nombre;
         $this->get_results_from_query();
@@ -99,14 +99,14 @@ class Habilidad extends DBAbstractModel
     }
     public function delete($id = null)
     {
-        $this->query = "DELETE FROM habilidades WHERE id = :id";
+        $this->query = "DELETE FROM superheroes_habilidades WHERE id = :id";
         $this->parametros['id'] = $id;
         $this->get_results_from_query();
         $this->mensaje = 'Usuario borrado correctamente';
     }
     public function getValorById($idHabilidad ,$idSuperheroe)
     {
-        $this->query = "SELECT valor FROM superheroes_habilidades where idHabilidad = :idHabilidad AND idSuperheroe = :idSuperheroe";
+        $this->query = "SELECT valor FROM superheroes_superheroes_habilidades where idHabilidad = :idHabilidad AND idSuperheroe = :idSuperheroe";
         $this->parametros['idHabilidad'] = $idHabilidad;
         $this->parametros['idSuperheroe'] = $idSuperheroe;
         $this->get_results_from_query();
