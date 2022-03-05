@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %} 
+{% block body %} 
+    <article class="blog"> 
+        <div> {{responseMessage}} </div> 
+        <h3>Add Blog</h3> 
+        <form name="formAddBlog" method="post" action="#" enctype="multipart/form-data"> 
+            <div id="enquiry"> 
+            <div>
+                <label for="enquiry_title" >Title</label> 
+                <input type="text" id="enquiry_title" name="title" /> 
+            </div> 
+            <div> 
+                <label for="enquiry_description">Description</label> 
+                <textarea id="enquiry_description" name="blog" required="required"></textarea> 
+            </div> 
+            <div> 
+                <label for="enquiry_tag" class="required">Tags</label> 
+                <input type="text" id="enquiry_tag" name="tags" required="required" /> 
+            </div> 
+            <div> 
+                <label for="image" >Imagen</label> 
+                <input type="file" name="image" id="image"/> 
+            </div> 
+            <div> 
+                <label for="enquiry_author" class="required">Author</label> 
+                <input type="text" id="enquiry_author" name="author" required="required" /> 
+            </div> 
+            <input type="submit" id="enquiry_save" name="enquiry[save]"> 
+            </div>
+            </div>
+        </form>
+     </article>
+{% endblock %}

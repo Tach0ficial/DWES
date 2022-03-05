@@ -11,6 +11,8 @@
         "aura/router": "^3.2",
         "laminas/laminas-diactoros": "^2.8",
         "twig/twig": "^3.3",
-        "illuminate/database": "^9.1"
+        "illuminate/database": "^9.1",
+        "swiftmailer/swiftmailer": "^6.3",
+        "respect/validation": "^2.2"
     }
 }

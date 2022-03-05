@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %} 
+{% block body %} 
+    <article class="blog"> 
+        <div> {{responseMessage}} </div> 
+ <h3>Login</h3>
+        <form name="formUsers" method="post" action="" enctype="multipart/form-data"> 
+            <div id="enquiry"> 
+            <div>
+                <label for="email" >email</label> 
+                <input type="text" id="email" name="email" /> 
+            </div> 
+     
+            <div> 
+                <label for="password" class="required">password</label> 
+                <input type="password" id="password" name="password" /> 
+            </div> 
+           
+            <input type="submit" id="enquiry_save" name="enquiry[save]"> 
+            </div>
+            </div>
+        </form>
+     </article>
+{% endblock %}

@@ -1,5 +1,10 @@
 <?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+require_once '../bootstrap.php';
 require_once '../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -8,7 +13,7 @@ use Laminas\Diactoros;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv = Dotenv::createImmutable(__DIR__, "../.env");
 $dotenv->load();
 
 $capsule = new Capsule;
@@ -46,6 +51,7 @@ $map->get('about', '/about', [
     'action' => 'aboutAction'
 ]);
 
+
 $map->get('contact', '/contact', [
     'controller' => 'App\Controllers\PagesController',
     'action' => 'contactAction'
@@ -58,11 +64,41 @@ $map->post('contactSend', '/contact', [
 
 $map->get('showBlog', '/blog/{id}', [
     'controller' => 'App\Controllers\BlogController',
-    'action' => 'blogAction'
+    'action' => 'showAction'
 ])->tokens(['id' => '\d+']);
+
+$map->get(
+    "addUser",
+    "/addUser",
+    ['controller' => 'App\Controllers\AddUserController', 'action' => 'addAction', 'auth' => true]
+);
+$map->post(
+    "AddUserSave",
+    "/addUser",
+    ['controller' => 'App\Controllers\AddUserController', 'action' => 'addAction', 'auth' => true]
+);
+
+$map->get(
+    "login",
+    "/login",
+    ['controller' => 'App\Controllers\AuthController', 'action' => 'getLogin']
+);
+$map->post(
+    "postlogin",
+    "/login",
+    ['controller' => 'App\Controllers\AuthController', 'action' => 'postLogin', 'auth' => true]
+);
+$map->get(
+    "admin",
+    "/admin",
+    ['controller' => 'App\Controllers\AdminController', 'action' => 'getIndex', 'auth' => true]
+);
+
+
 
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
+
 if (!$route) {
     echo 'No route';
 } else {
@@ -73,19 +109,17 @@ if (!$route) {
 
     $needsAuth = $handlerData['auth'] ?? false;
     $sessionUserId = $_SESSION['userId'] ?? null;
-    // if ($needsAuth && !$sessionUserId) {
-    //     header('Location: /login');
-
-    // }
-    // else {
-    $controller = new $controllerName;
-    $response = $controller->$actionName($request);
-    foreach ($response->getHeaders() as $name => $values) {
-        foreach ($values as $value) {
-            header(sprintf('%s: %s', $name, $value), false);
+    if ($needsAuth && !$sessionUserId) {
+        header('Location: /login');
+    } else {
+        $controller = new $controllerName;
+        $response = $controller->$actionName($request);
+        foreach ($response->getHeaders() as $name => $values) {
+            foreach ($values as $value) {
+                header(sprintf('%s: %s', $name, $value), false);
+            }
         }
+        http_response_code($response->getStatusCode());
+        echo $response->getBody();
     }
-    http_response_code($response->getStatusCode());
-    echo $response->getBody();
 }
-// }

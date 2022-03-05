@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %} 
+{% block body %} 
+     
+    <article class="blog"> 
+    <div class="date">
+        <time datetime="{{ blog.created_at|date('c') }}">{{ blog.created_at|date('l, F j, Y') }}</time>
+    </div> 
+    <header> 
+        <h2><a href="#">{{ blog.title }}</a></h2> 
+    </header> 
+    <img src="img/{{blog.image}}" /> 
+    <div class="snippet"> 
+        <p>{{ blog.blog }}</p> 
+    </div>
+    
+     <div class="comments">
+    
+{% for comment in comments %}
+        <div class="comment">
+         {{comment.comment }}
+        </div>
+        <div>{{comment.user}}</div>
+
+
+{% endfor %}
+    </div>
+    </article> 
+
+{% endblock %}
